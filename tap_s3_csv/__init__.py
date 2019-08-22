@@ -26,10 +26,8 @@ def do_discover(config):
 def stream_is_selected(mdata):
     return mdata.get((), {}).get('selected', False)
 
-
 def do_sync(config, catalog, state):
     LOGGER.info('Starting sync.')
-
     for stream in catalog['streams']:
         stream_name = stream['tap_stream_id']
         mdata = metadata.to_map(stream['metadata'])
@@ -70,16 +68,17 @@ def validate_table_config(config):
 def main():
     args = singer.utils.parse_args(REQUIRED_CONFIG_KEYS)
     config = args.config
-
+    bucket = config['bucket']
+    aws_access_key_id = config['aws_access_key_id']
+    aws_secret_access_key =config['aws_secret_access_key']
+    endpoint_url =config['endpoint_url']
     config['tables'] = validate_table_config(config)
-
     try:
-        for page in s3.list_files_in_bucket(config['bucket']):
+        for page in s3.list_files_in_bucket(bucket,aws_access_key_id,aws_secret_access_key,endpoint_url):
             break
         LOGGER.warning("I have direct access to the bucket without assuming the configured role.")
     except:
         s3.setup_aws_client(config)
-
     if args.discover:
         do_discover(args.config)
     elif args.properties:

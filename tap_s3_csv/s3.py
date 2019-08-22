@@ -22,8 +22,6 @@ SDC_SOURCE_FILE_COLUMN = "_sdc_source_file"
 SDC_SOURCE_LINENO_COLUMN = "_sdc_source_lineno"
 
 # minio s3 session
-session = boto3.session.Session()
-
 def retry_pattern():
     return backoff.on_exception(backoff.expo,
                                 ClientError,
@@ -188,8 +186,7 @@ def get_input_files_for_table(config, table_spec, modified_since=None):
 
 @retry_pattern()
 def list_files_in_bucket(bucket,aws_access_key_id,aws_secret_access_key,endpoint_url, search_prefix=None):
-    # s3_client = boto3.client('s3')
-    s3_client = session.client(
+    s3_client = boto3.session.Session().client(
         service_name='s3',
         aws_access_key_id=aws_access_key_id,
         aws_secret_access_key=aws_secret_access_key,
@@ -226,12 +223,6 @@ def get_file_handle(config, s3_path):
     aws_access_key_id = config['aws_access_key_id']
     aws_secret_access_key =config['aws_secret_access_key']
     endpoint_url =config['endpoint_url']
-    # s3_client = session.client(
-    #     service_name='s3',
-    #     aws_access_key_id=aws_access_key_id,
-    #     aws_secret_access_key=aws_secret_access_key,
-    #     endpoint_url=endpoint_url,
-    # )
     s3_client = boto3.resource(
        service_name="s3",
        aws_access_key_id=aws_access_key_id,
