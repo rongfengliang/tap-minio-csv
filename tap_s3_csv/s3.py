@@ -21,6 +21,8 @@ SDC_SOURCE_BUCKET_COLUMN = "_sdc_source_bucket"
 SDC_SOURCE_FILE_COLUMN = "_sdc_source_file"
 SDC_SOURCE_LINENO_COLUMN = "_sdc_source_lineno"
 
+# minio s3 session
+session = boto3.session.Session()
 
 def retry_pattern():
     return backoff.on_exception(backoff.expo,
@@ -32,47 +34,6 @@ def retry_pattern():
 
 def log_backoff_attempt(details):
     LOGGER.info("Error detected communicating with Amazon, triggering backoff: %d try", details.get("tries"))
-
-
-class AssumeRoleProvider():
-    METHOD = 'assume-role'
-
-    def __init__(self, fetcher):
-        self._fetcher = fetcher
-
-    def load(self):
-        return DeferredRefreshableCredentials(
-            self._fetcher.fetch_credentials,
-            self.METHOD
-        )
-
-
-@retry_pattern()
-def setup_aws_client(config):
-    role_arn = "arn:aws:iam::{}:role/{}".format(config['account_id'].replace('-', ''),
-                                                config['role_name'])
-    session = Session()
-    fetcher = AssumeRoleCredentialFetcher(
-        session.create_client,
-        session.get_credentials(),
-        role_arn,
-        extra_args={
-            'DurationSeconds': 3600,
-            'RoleSessionName': 'TapS3CSV',
-            'ExternalId': config['external_id']
-        },
-        cache=JSONFileCache()
-    )
-
-    refreshable_session = Session()
-    refreshable_session.register_component(
-        'credential_provider',
-        CredentialResolver([AssumeRoleProvider(fetcher)])
-    )
-
-    LOGGER.info("Attempting to assume_role on RoleArn: %s", role_arn)
-    boto3.setup_default_session(botocore_session=refreshable_session)
-
 
 def get_sampled_schema_for_table(config, table_spec):
     LOGGER.info('Sampling records to determine table schema.')
@@ -153,7 +114,9 @@ def sample_files(config, table_spec, s3_files,
 
 def get_input_files_for_table(config, table_spec, modified_since=None):
     bucket = config['bucket']
-
+    aws_access_key_id = config['aws_access_key_id']
+    aws_secret_access_key =config['aws_secret_access_key']
+    endpoint_url =config['endpoint_url']
     to_return = []
 
     pattern = table_spec['search_pattern']
@@ -207,9 +170,14 @@ def get_input_files_for_table(config, table_spec, modified_since=None):
 
 
 @retry_pattern()
-def list_files_in_bucket(bucket, search_prefix=None):
-    s3_client = boto3.client('s3')
-
+def list_files_in_bucket(bucket,aws_access_key_id,aws_secret_access_key,endpoint_url, search_prefix=None):
+    # s3_client = boto3.client('s3')
+    s3_client = session.client(
+        service_name='s3',
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key,
+        endpoint_url=endpoint_url,
+    )
     s3_object_count = 0
 
     max_results = 1000
@@ -238,8 +206,15 @@ def list_files_in_bucket(bucket, search_prefix=None):
 @retry_pattern()
 def get_file_handle(config, s3_path):
     bucket = config['bucket']
-    s3_client = boto3.resource('s3')
-
+    aws_access_key_id = config['aws_access_key_id']
+    aws_secret_access_key =config['aws_secret_access_key']
+    endpoint_url =config['endpoint_url']
+    s3_client = session.client(
+        service_name='s3',
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key,
+        endpoint_url=endpoint_url,
+    )
     s3_bucket = s3_client.Bucket(bucket)
     s3_object = s3_bucket.Object(s3_path)
     return s3_object.get()['Body']

@@ -1,5 +1,7 @@
 # tap-s3-csv
 
+> fork from https://github.com/singer-io/tap-s3-csv for support minio 
+
 This is a [Singer](https://singer.io) tap that reads data from files located inside a given S3 bucket and produces JSON-formatted data following the [Singer spec](https://github.com/singer-io/getting-started/blob/master/SPEC.md).
 
 ## How to use it

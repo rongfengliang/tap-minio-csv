@@ -1,0 +1,12 @@
+version: "3"
+services: 
+  s3: 
+    image: minio/minio
+    command: server /data
+    ports: 
+    - "9000:9000"
+    environment:
+    - "MINIO_ACCESS_KEY=dalongapp"
+    - "MINIO_SECRET_KEY=dalongapp"
+    volumes: 
+    - "./data:/data" 
