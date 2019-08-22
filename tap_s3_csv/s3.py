@@ -151,7 +151,7 @@ def get_input_files_for_table(config, table_spec, modified_since=None):
     matched_files_count = 0
     unmatched_files_count = 0
     max_files_before_log = 30000
-    for s3_object in list_files_in_bucket(bucket, table_spec.get('search_prefix')):
+    for s3_object in list_files_in_bucket(bucket,aws_access_key_id,aws_secret_access_key,endpoint_url, table_spec.get('search_prefix')):
         key = s3_object['Key']
         last_modified = s3_object['LastModified']
 
