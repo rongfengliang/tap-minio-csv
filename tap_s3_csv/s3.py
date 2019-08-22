@@ -22,7 +22,7 @@ SDC_SOURCE_FILE_COLUMN = "_sdc_source_file"
 SDC_SOURCE_LINENO_COLUMN = "_sdc_source_lineno"
 
 # minio s3 session
-session = boto3.session.Sxession()
+session = boto3.session.Session()
 
 def retry_pattern():
     return backoff.on_exception(backoff.expo,
