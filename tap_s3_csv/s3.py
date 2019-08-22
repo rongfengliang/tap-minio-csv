@@ -4,12 +4,6 @@ import backoff
 import boto3
 import singer
 
-from botocore.credentials import (
-    AssumeRoleCredentialFetcher,
-    CredentialResolver,
-    DeferredRefreshableCredentials,
-    JSONFileCache
-)
 from botocore.exceptions import ClientError
 from botocore.session import Session
 from singer_encodings import csv

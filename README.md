@@ -52,10 +52,9 @@ The `table` field consists of one or more objects, JSON encoded as an array and 
 [
     {
         "search_prefix": "exports"
-        "search_pattern": "my_table\\/.*\\.csv",
+        "search_pattern": "my_table.csv",
         "table_name": "my_table",
         "key_properties": "id",
-        "date_overrides": "created_at",
         "delimiter": ","
     },
     ...
@@ -73,4 +72,20 @@ A sample configuration is available inside [config.sample.json](config.sample.js
 
 ---
 
+### Useage
+
+> better use virtualenv
+
+* Config minio s3
+
+```code
+
+
+```
+
+* discover schema
+
+```code
+
+```
 Copyright &copy; 2018 Stitch

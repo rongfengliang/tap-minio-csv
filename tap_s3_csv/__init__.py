@@ -78,7 +78,7 @@ def main():
             break
         LOGGER.warning("I have direct access to the bucket without assuming the configured role.")
     except:
-        s3.setup_aws_client(config)
+        LOGGER.error("can't connect to s3 storage")
     if args.discover:
         do_discover(args.config)
     elif args.properties:
