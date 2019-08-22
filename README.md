@@ -78,14 +78,30 @@ A sample configuration is available inside [config.sample.json](config.sample.js
 
 * Config minio s3
 
-```code
+> tap-config.json
 
+```code
+{
+    "start_date": "2017-11-02T00:00:00Z",
+    "bucket": "demo",
+    "aws_access_key_id":"dalongapp",
+    "aws_secret_access_key":"dalongapp",
+    "endpoint_url":"http://localhost:9000",
+    "tables": "[{\"search_prefix\":\"exports\",\"search_pattern\":\"my_table.csv\",\"table_name\":\"my_table\",\"key_properties\":\"id\",\"delimiter\":\",\"}]"
+}
 
 ```
 
 * discover schema
 
 ```code
-
+tap-s3-csv -c  tap-config.json > catalog.json
 ```
+
+* data tranform
+
+```code
+tap-s3-csv -c s3-tap/tap-config.json  -p  catalog.json | <some target config>
+```
+
 Copyright &copy; 2018 Stitch
