@@ -31,6 +31,10 @@ def retry_pattern():
                                 on_backoff=log_backoff_attempt,
                                 factor=10)
 
+def log_backoff_attempt(details):
+    LOGGER.info("Error detected communicating with Amazon, triggering backoff: %d try", details.get("tries"))
+
+
 @retry_pattern()
 def setup_aws_client(config):
     session = Session()
