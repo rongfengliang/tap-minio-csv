@@ -2,13 +2,13 @@
 
 from setuptools import setup
 
-setup(name='tap-s3-csv',
+setup(name='tap-minio-csv',
       version='1.2.1',
-      description='Singer.io tap for extracting CSV files from S3',
+      description='Singer.io tap for extracting CSV files from minio',
       author='Stitch',
       url='https://singer.io',
       classifiers=['Programming Language :: Python :: 3 :: Only'],
-      py_modules=['tap_s3_csv'],
+      py_modules=['tap-minio-csv'],
       install_requires=[
           'backoff==1.3.2',
           'boto3==1.9.57',
@@ -23,6 +23,6 @@ setup(name='tap-s3-csv',
       },
       entry_points='''
           [console_scripts]
-          tap-s3-csv=tap_s3_csv:main
+          tap-minio-csv=tap-minio-csv:main
       ''',
-      packages=['tap_s3_csv'])
+      packages=['tap-minio-csv'])
