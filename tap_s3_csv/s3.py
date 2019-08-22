@@ -37,7 +37,7 @@ def log_backoff_attempt(details):
 
 @retry_pattern()
 def setup_aws_client(config):
-    session = Session()
+    session = boto3.session.Session()
     aws_access_key_id = config['aws_access_key_id']
     aws_secret_access_key =config['aws_secret_access_key']
     endpoint_url =config['endpoint_url']
