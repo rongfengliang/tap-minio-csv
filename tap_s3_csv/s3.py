@@ -232,7 +232,11 @@ def get_file_handle(config, s3_path):
     #     aws_secret_access_key=aws_secret_access_key,
     #     endpoint_url=endpoint_url,
     # )
-    s3_client = boto3.resource("s3")
+    s3_client = boto3.resource(
+       service_name="s3",
+       aws_access_key_id=aws_access_key_id,
+       aws_secret_access_key=aws_secret_access_key,
+       endpoint_url=endpoint_url)
     s3_bucket = s3_client.Bucket(bucket)
     s3_object = s3_bucket.Object(s3_path)
     return s3_object.get()['Body']
