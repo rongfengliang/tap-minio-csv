@@ -98,6 +98,20 @@ A sample configuration is available inside [config.sample.json](config.sample.js
 tap-minio-csv -c  tap-config.json > catalog.json
 ```
 
+* Enable select stream in metadata
+
+```code
+      "metadata": [
+        {
+          "breadcrumb": [],
+          "metadata": {
+            "table-key-properties": [
+              "id"
+            ],
+            "selected":true
+        }
+```
+
 * data tranform
 
 ```code
