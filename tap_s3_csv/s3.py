@@ -31,6 +31,18 @@ def retry_pattern():
                                 on_backoff=log_backoff_attempt,
                                 factor=10)
 
+@retry_pattern()
+def setup_aws_client(config):
+    session = Session()
+    aws_access_key_id = config['aws_access_key_id']
+    aws_secret_access_key =config['aws_secret_access_key']
+    endpoint_url =config['endpoint_url']
+    s3_client = session.client(
+        service_name='s3',
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key,
+        endpoint_url=endpoint_url,
+    )
 
 def log_backoff_attempt(details):
     LOGGER.info("Error detected communicating with Amazon, triggering backoff: %d try", details.get("tries"))
