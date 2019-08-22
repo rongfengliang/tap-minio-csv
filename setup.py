@@ -3,10 +3,10 @@
 from setuptools import setup
 
 setup(name='tap-minio-csv',
-      version='1.2.1',
+      version='1.2.2',
       description='Singer.io tap for extracting CSV files from minio',
       author='rongfengliang',
-      url='https://github.com/rongfengliang',
+      url='https://github.com/rongfengliang/tap-minio-csv',
       classifiers=['Programming Language :: Python :: 3 :: Only'],
       py_modules=['tap_minio_csv'],
       install_requires=[
