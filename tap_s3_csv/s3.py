@@ -154,7 +154,7 @@ def get_input_files_for_table(config, table_spec, modified_since=None):
     for s3_object in list_files_in_bucket(bucket,aws_access_key_id,aws_secret_access_key,endpoint_url, table_spec.get('search_prefix')):
         key = s3_object['Key']
         last_modified = s3_object['LastModified']
-        LOGGER.info(s3_object.key)
+        LOGGER.info(key)
         if s3_object['Size'] == 0:
             LOGGER.info('Skipping matched file "%s" as it is empty', key)
             unmatched_files_count += 1
