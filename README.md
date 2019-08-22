@@ -17,7 +17,7 @@ installation instructions for [Mac](http://docs.python-guide.org/en/latest/start
 It's recommended to use a virtualenv:
 
 ```bash
- python3 -m venv ~/.virtualenvs/tap-s3-csv
+ python3 -m venv ~/.virtualenvs/tap-minio-csv
  source ~/.virtualenvs/tap-minio-csv/bin/activate
  pip install -U pip setuptools
  pip install -e '.[dev]'
