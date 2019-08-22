@@ -30,19 +30,20 @@ Here is an example of basic config, and a bit of a run down on each of the prope
 ```
 {
     "start_date": "2017-11-02T00:00:00Z",
-    "account_id": "1234567890",
-    "role_name": "role_with_bucket_access",
     "bucket": "my-bucket",
-    "external_id": "my_optional_secret_external_id",
-    "tables": "[{\"search_prefix\":\"exports\",\"search_pattern\":\"my_table\\\\/.*\\\\.csv\",\"table_name\":\"my_table\",\"key_properties\":\"id\",\"date_overrides\":\"created_at\",\"delimiter\":\",\"}]",
+    "aws_access_key_id":"dalongapp",
+    "aws_secret_access_key":"dalongapp",
+    "endpoint_url":"http://localhost:9000",
+    "tables": "[{\"search_prefix\":\"exports\",\"search_pattern\":\"my_table\\\\/.*\\\\.csv\",\"table_name\":\"my_table\",\"key_properties\":\"id\",\"date_overrides\":\"created_at\",\"delimiter\":\",\"}]"
 }
+
 ```
 
 - **start_date**: This is the datetime that the tap will use to look for newly updated or created files, based on the modified timestamp of the file.
-- **account_id**: This is your AWS account id
-- **role_name**: In order to access a bucket, the tap uses boto3 to assume a role in your AWS account. If you have your AWS account credentials set up locally, you can specify this as a role which your local user has access to assume, and boto3 should by default pick up your AWS keys from the local environment.
+- **aws_access_key_id**: This is your s3  aws_access_key_id
+- **aws_secret_access_key**:  This is your s3  aws_secret_access_key
 - **bucket**: The name of the bucket to search for files under.
-- **external_id**: (potentially optional) Running this locally, you should be able to omit this property, it is provided to allow the tap to access buckets in accounts where the user doesn't have access to the account itself, but is able to assume a role in that account, through a shared secret. This is that secret, in that case.
+- **endpoint_url**:  minio service endpoint
 - **tables**: An escaped JSON string that the tap will use to search for files, and emit records as "tables" from those files. Will be used by a [`voluptuous`](https://github.com/alecthomas/voluptuous)-based configuration checker.
 
 The `table` field consists of one or more objects, JSON encoded as an array and escaped using backslashes (e.g., `\"` for `"` and `\\` for `\`), that describe how to find files and emit records. A more detailed (and unescaped) example below:
