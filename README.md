@@ -1,4 +1,4 @@
-# tap-s3-csv
+# tap-minio-csv
 
 > fork from https://github.com/singer-io/tap-s3-csv for support minio 
 
@@ -6,7 +6,7 @@ This is a [Singer](https://singer.io) tap that reads data from files located ins
 
 ## How to use it
 
-`tap-s3-csv` works together with any other [Singer Target](https://singer.io) to move data from s3 to any target destination.
+`tap-minio-csv` works together with any other [Singer Target](https://singer.io) to move data from s3 to any target destination.
 
 ### Install and Run
 
@@ -18,7 +18,7 @@ It's recommended to use a virtualenv:
 
 ```bash
  python3 -m venv ~/.virtualenvs/tap-s3-csv
- source ~/.virtualenvs/tap-s3-csv/bin/activate
+ source ~/.virtualenvs/tap-minio-csv/bin/activate
  pip install -U pip setuptools
  pip install -e '.[dev]'
 ```
@@ -95,13 +95,13 @@ A sample configuration is available inside [config.sample.json](config.sample.js
 * discover schema
 
 ```code
-tap-s3-csv -c  tap-config.json > catalog.json
+tap-minio-csv -c  tap-config.json > catalog.json
 ```
 
 * data tranform
 
 ```code
-tap-s3-csv -c s3-tap/tap-config.json  -p  catalog.json | <some target config>
+tap-minio-csv -c s3-tap/tap-config.json  -p  catalog.json | <some target config>
 ```
 
 Copyright &copy; 2018 Stitch

@@ -7,7 +7,7 @@ import singer
 from botocore.exceptions import ClientError
 from botocore.session import Session
 from singer_encodings import csv
-from tap-minio-csv import conversion
+from tap_minio_csv import conversion
 
 LOGGER = singer.get_logger()
 

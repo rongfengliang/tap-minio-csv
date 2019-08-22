@@ -7,7 +7,7 @@ from singer import utils
 
 import singer
 from singer_encodings import csv as singer_encodings_csv
-from tap-minio-csv import s3
+from tap_minio_csv import s3
 
 LOGGER = singer.get_logger()
 

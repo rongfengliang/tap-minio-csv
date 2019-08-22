@@ -5,10 +5,10 @@ from setuptools import setup
 setup(name='tap-minio-csv',
       version='1.2.1',
       description='Singer.io tap for extracting CSV files from minio',
-      author='Stitch',
-      url='https://singer.io',
+      author='rongfengliang',
+      url='https://github.com/rongfengliang',
       classifiers=['Programming Language :: Python :: 3 :: Only'],
-      py_modules=['tap-minio-csv'],
+      py_modules=['tap_minio_csv'],
       install_requires=[
           'backoff==1.3.2',
           'boto3==1.9.57',
@@ -23,6 +23,6 @@ setup(name='tap-minio-csv',
       },
       entry_points='''
           [console_scripts]
-          tap-minio-csv=tap-minio-csv:main
+          tap-minio-csv=tap_minio_csv:main
       ''',
-      packages=['tap-minio-csv'])
+      packages=['tap_minio_csv'])

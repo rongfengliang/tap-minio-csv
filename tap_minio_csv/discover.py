@@ -1,5 +1,5 @@
 from singer import metadata
-from tap-minio-csv import s3
+from tap_minio_csv import s3
 
 def discover_streams(config):
     streams = []
